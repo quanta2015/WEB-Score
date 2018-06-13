@@ -1,0 +1,48 @@
+.g-login {
+   margin: 150px auto;
+   background: #eee;
+   width: 360px;
+   border-radius: 3px;
+   padding: 20px 15px;
+}
+
+.m-col {
+    margin: 10px 0;
+}
+
+.g-audit {
+   margin: 20px auto;
+   background: #eee;
+   width: 560px;
+   border-radius: 3px;
+   padding: 20px 15px;
+   font-size: 0;
+}
+
+.u-mark {
+    padding: 5px;
+    display: inline-block;
+    background: #fff;
+    width: calc( (100% - 40px) / 4 );
+    box-sizing: border-box;
+    font-size: 16px;
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+
+.u-title {
+    font-size: 16px;
+}
+
+.sel {
+    background: #26C281;
+    color: #fff;
+}
+
+.dis {
+    background: #999;
+    color: #fff;
+}

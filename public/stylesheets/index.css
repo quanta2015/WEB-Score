@@ -1,0 +1,132 @@
+.g-index {
+   display: flex;
+   flex-direction: column; 
+   height: 100%;
+}
+
+.m-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.m-info>span:last-child {
+    margin-bottom: 0;
+}
+
+.m-info>span {
+    margin:  5px 0;
+    padding: 5px 15px;
+    display: inline-block;
+}
+
+.u-gid {
+    font-size: 64px;
+    font-weight: 600;
+    flex:1;
+}
+
+.u-title {
+    font-size: 36px;
+    color: #666;
+}
+
+.u-member {
+    font-size: 24px;
+    color: #999;
+}
+
+.u-git {
+    font-size: 16px;
+    color: #fff;
+    background: #333;
+}
+
+.u-git a {
+    color: #fff;
+}
+
+.m-score {
+    flex-basis: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ff6600;
+    color: #fff;
+    font-size: 96px;
+}
+
+.m-main {
+    height: 250px;
+    /*flex-basis: 20%;*/
+    background: #eee;
+    display: flex;
+    flex-direction: row;
+}
+
+.m-audit {
+    flex:1;
+    background: #666;
+    padding: 5px;
+}
+
+.m-audit-item {
+    width: 10%;
+    display: inline-block;
+    border: 5px solid #666;
+    box-sizing: border-box;
+    background: #eee;
+    /*padding: 5px;*/
+    display: block;
+    float: left;
+}
+
+
+.m-audit-item>li {
+    padding: 5px 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+
+.m-audit-item>li>.u-title {
+    color: #666;
+    font-size: 16px;
+}
+
+.m-audit-item>li.u-score-ret {
+    border-top: 1px solid #aaa;
+    text-align: right;
+    font-size: 48px;
+}
+
+.u-score {
+    display: flex;
+}
+
+.u-mark {
+    flex: 1;
+    text-align: right;
+    color: #E26A6A;
+}
+
+.u-score-ret>.u-mark{
+    color: #E43A45
+}
+
+
+.m-wait {
+    width: 100%;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+li.u-item-title {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    position: relative;
+}

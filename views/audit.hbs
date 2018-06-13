@@ -1,0 +1,74 @@
+<div class="g-login"  >
+  <div class="m-row">
+    <div class="m-col"><input type="text" id="usr" placeholder="用户名"></div>
+    <div class="m-col"><input type="password" id="pwd"  placeholder="密码"></div>
+    <button class="btn-login" type="submit">登录</button>
+  </div>
+</div>
+
+<div class="g-audit" style="display: none">
+  <div class="m-row">
+    <div class="m-col"><span class="u-title">答辩</span></div>
+    <div class="m-col">
+        <span class="u-mark u-mark-ask" data-type='ask'>0分</span>
+        <span class="u-mark u-mark-ask" data-type='ask'>60分</span>
+        <span class="u-mark u-mark-ask" data-type='ask'>80分</span>
+        <span class="u-mark u-mark-ask" data-type='ask'>100分</span>
+    </div>
+  </div>
+  <div class="m-row">
+    <div class="m-col"><span class="u-title">界面</span></div>
+    <div class="m-col">
+        <span class="u-mark u-mark-interface"  data-type='interface'>0分</span>
+        <span class="u-mark u-mark-interface"  data-type='interface'>60分</span>
+        <span class="u-mark u-mark-interface"  data-type='interface'>80分</span>
+        <span class="u-mark u-mark-interface"  data-type='interface'>100分</span>
+    </div>
+  </div>
+  <div class="m-row">
+    <div class="m-col"><span class="u-title">功能</span></div>
+    <div class="m-col">
+        <span class="u-mark u-mark-function"  data-type='function'>0分</span>
+        <span class="u-mark u-mark-function"  data-type='function'>60分</span>
+        <span class="u-mark u-mark-function"  data-type='function'>80分</span>
+        <span class="u-mark u-mark-function"  data-type='function'>100分</span>
+    </div>
+  </div>
+  <div class="m-row">
+    <div class="m-col"><span class="u-title">代码</span></div>
+    <div class="m-col">
+        <span class="u-mark u-mark-code"  data-type='code'>0分</span>
+        <span class="u-mark u-mark-code"  data-type='code'>60分</span>
+        <span class="u-mark u-mark-code"  data-type='code'>80分</span>
+        <span class="u-mark u-mark-code"  data-type='code'>100分</span>
+    </div>
+  </div>
+  <div class="m-row">
+    <div class="m-col"><span class="u-title">团队</span></div>
+    <div class="m-col">
+        <span class="u-mark u-mark-group"  data-type='group'>0分</span>
+        <span class="u-mark u-mark-group"  data-type='group'>60分</span>
+        <span class="u-mark u-mark-group"  data-type='group'>80分</span>
+        <span class="u-mark u-mark-group"  data-type='group'>100分</span>
+    </div>
+  </div>
+  <div class="m-row">
+    <div class="m-col"><button class="btn-mark dis" type="submit" disabled>评分</button></div>
+    
+  </div>
+
+
+
+
+  
+</div>
+
+<link rel='stylesheet' href='/lib/alertify/alertify.css' />
+<link rel='stylesheet' href='/stylesheets/common.css' />
+<link rel='stylesheet' href='/stylesheets/audit.css' />
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/lib/jquery.min.js"></script>
+<script src="/lib/alertify/alertify.min.js"></script>
+<script src="/javascripts/common.js"></script>
+<script src="/javascripts/audit.js"></script>
