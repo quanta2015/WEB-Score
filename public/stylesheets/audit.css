@@ -11,12 +11,44 @@
 }
 
 .g-audit {
-   margin: 20px auto;
+   margin: 80px auto;
    background: #eee;
    width: 560px;
    border-radius: 3px;
    padding: 20px 15px;
    font-size: 0;
+   position: relative;
+}
+
+.m-id {
+    position: absolute;
+    left: 0;
+    top: -60px;
+    background: #4b77be;
+    width: 200px;
+    height: 50px;
+    color: #fff;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.m-counter {
+    position: absolute;
+    right: -50px;
+    width: 100px;
+    top: -50px;
+    height: 100px;
+    background: #ff3300;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 600;
 }
 
 .u-mark {

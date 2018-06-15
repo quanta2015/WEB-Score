@@ -17,19 +17,38 @@ function init() {
     socket.on('init', function(){
         $('.g-index').fadeIn(100);
         $('#init').prop('disabled',true);
+        $('#start').prop('disabled',false);
     });
 
     socket.on('login-succ', function(uid){
-        let item = $.format(HTML_AUDIT,uid,uid);
+        // let code = strTo62(uid);
+        let item = $.format(HTML_AUDIT,strTo62(uid),uid);
         $('.m-audit').append(item);
-        $('#'+uid).text(uid);
+        // $('#'+uid).text(strTo62(uid));
     });
 
-    socket.on('start', function(uid){
+    socket.on('start', function(data){
+        let gd = JSON.parse(data)
+        $('.m-info .u-gid').text(gd.id);
+        $('.m-info .u-title').text(gd.title);
+        $('.m-info .u-member').text(gd.member);
+        // $('.u-git').text(gd.git);
+
         $('.m-wait').hide();
         $('.m-info').show();
         $('.m-score').show();
         $('#start').prop('disabled',true);
+        $('#mark').prop('disabled',false);
+    });
+
+
+    socket.on('mark', function(uid, arr){  
+        $('#'+uid).parent().find('.u-mark-ask').text(arr[0])
+        $('#'+uid).parent().find('.u-mark-interface').text(arr[1])
+        $('#'+uid).parent().find('.u-mark-function').text(arr[2])
+        $('#'+uid).parent().find('.u-mark-code').text(arr[3])
+        $('#'+uid).parent().find('.u-mark-group').text(arr[4])
+        $('#'+uid).parent().find('.u-mark-ret').text(arr[5])
     });
 
     socket.on('result', function(ret){
@@ -66,18 +85,28 @@ function init() {
         $('#'+maxUid).addClass('del');
 
         console.log(ret);
+        $('#mark').prop('disabled',true);
+        $('#next').prop('disabled',false);
     });
 
 
-    socket.on('mark', function(uid, arr){
-        
-        $('#'+uid).parent().find('.u-mark-ask').text(arr[0])
-        $('#'+uid).parent().find('.u-mark-interface').text(arr[1])
-        $('#'+uid).parent().find('.u-mark-function').text(arr[2])
-        $('#'+uid).parent().find('.u-mark-code').text(arr[3])
-        $('#'+uid).parent().find('.u-mark-group').text(arr[4])
-        $('#'+uid).parent().find('.u-mark-ret').text(arr[5])
+    socket.on('next', function(data){
+        let gd = JSON.parse(data)
+        $('.m-info .u-gid').text(gd.id);
+        $('.m-info .u-title').text(gd.title);
+        $('.m-info .u-member').text(gd.member);
+        $('.u-item-title').removeClass('del');
+        // $('.u-git').text(gd.git);
+
+        $('#start').prop('disabled',false);
+        $('#mark').prop('disabled',true);
+        $('#next').prop('disabled',true);
+
+        $('.u-mark').text('0');
+        $('#result-f').text('0');
     });
+
+
 
     socket.on('close', function(uid){
         $('#'+uid).parent().remove();
@@ -86,6 +115,7 @@ function init() {
     $('#init').on('click', doInit);
     $('#start').on('click', doStart);
     $('#mark').on('click', doMark);
+    $('#next').on('click', doNext);
 }
 
 
@@ -99,6 +129,10 @@ function doStart() {
 
 function doMark() {
     socket.emit('result');
+}
+
+function doNext() {
+    socket.emit('next');
 }
 
 

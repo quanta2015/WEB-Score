@@ -1,17 +1,30 @@
 #!/usr/bin/env node
 
+
+var data = [
+{id:'G1', title:'租房系统',member:'王慧|禤小兰|安亚慧|赵建新'},
+{id:'G2', title:'求职数据系统',member:'钱英敏|王吉峰|廖书雷|杨鹏程'},
+{id:'G3', title:'课程推荐系统',member:'徐嘉|程泽|赵华洋|牛子麒'},
+{id:'G4', title:'求职系统',member:'王剑|徐航迪|叶奥丰|徐建超'},
+{id:'G5', title:'房价数据系统',member:'雷涛|王杨|许宇星'},
+{id:'G6', title:'租房数据系统',member:'王孙乔|陈柏韬|徐博'},
+{id:'G7', title:'旅游数据系统',member:'曼尼亚|古丽皮也·斯皮尔|熊明月'},
+{id:'G8', title:'美食系统',member:'万清弋|王霖浩|陈东昊'} ]
+
+var cur = 0;
+var userList  = [];
+var retList = [];
+
 var app = require('../app');
 // var debug = require('debug')('score:server');
 var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 
-var userList = [];
-var retList = [];
+
 
 function avgr(s) {
   let ret = 0;
@@ -58,7 +71,9 @@ io.on('connection', function(socket){
   });
 
   socket.on('start', function(uid){
-    io.emit('start');
+    userList = [];
+    retList = [];
+    io.emit('start', JSON.stringify(data[cur]) );
     log('start game...');
   });
 
@@ -75,6 +90,14 @@ io.on('connection', function(socket){
   socket.on('result', function(){
     io.emit('result', retList);
     log('calu result...');
+  });
+
+  socket.on('next', function(){
+    cur++;
+    retList = [];
+
+    io.emit('next', JSON.stringify(data[cur]));
+    log('init next group...');
   });
 
 

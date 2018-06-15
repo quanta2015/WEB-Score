@@ -1,16 +1,34 @@
+var WAIT_TIME = 30;
 var socket;
 var _usr;
+var _count = WAIT_TIME;
+var mkList = ['ask', 'interface', 'function', 'code', 'group'];
+
+
+function doCounter() {
+  setTimeout( () => {
+    --_count;
+    if (_count>0) {
+      $('.m-counter').text(_count);
+      doCounter(_count)
+    }else{
+      doMark();
+    }
+  }, 1000 );
+}
 
 $(init)
 
 function init() {
   socket = io();
-
   
   socket.on('login-succ', function(usr){
     if (usr === _usr) {
       $('.g-login').hide();
       $('.g-audit').fadeIn(100);
+
+
+      $('.m-id').text(strTo62(usr));
     }
   });
 
@@ -21,6 +39,13 @@ function init() {
   socket.on('start', function(msg){
     $('.btn-mark').prop('disabled',false);
     $('.btn-mark').removeClass('dis');
+
+    doCounter();
+  });
+
+  socket.on('next', function(data){
+    $('.u-mark').removeClass('sel');
+    $('.m-counter').text(_count=WAIT_TIME);
   });
 
   window.onbeforeunload = function(){  
@@ -33,12 +58,21 @@ function init() {
 }
 
 function doMark() {
+
+  _count = 0 ;
+  $('.m-counter').text(_count);
+
   let arr = [];
-  arr.push( $('.u-mark-ask.sel').text().split('分')[0] );
-  arr.push( $('.u-mark-interface.sel').text().split('分')[0] );
-  arr.push( $('.u-mark-function.sel').text().split('分')[0] );
-  arr.push( $('.u-mark-code.sel').text().split('分')[0] );
-  arr.push( $('.u-mark-group.sel').text().split('分')[0] );
+  
+  mkList.forEach(function(v){
+    if($('.u-mark-' + v + '.sel').length>0) {
+      ret = $('.u-mark-' + v + '.sel').text().split('分')[0];
+    }else{
+      $('.u-mark-' + v + ':first').addClass('sel')
+      ret = 0;
+    }
+    arr.push(ret)
+  })
 
   $('.btn-mark').prop('disabled',true);
   $('.btn-mark').addClass('dis');
