@@ -1,7 +1,7 @@
 .g-index {
-   display: flex;
-   flex-direction: column; 
-   height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: calc( 100vh - 50px );
 }
 
 .m-info {
@@ -62,25 +62,30 @@
     background: #eee;
     display: flex;
     flex-direction: row;
+    position: relative;
 }
 
 .m-audit {
-    flex:1;
+    flex: 1;
     background: #666;
     padding: 5px;
+    height: calc(100vh - 300px);
 }
 
 .m-audit-item {
-    width: 10%;
+    width: 12.5%;
     display: inline-block;
     border: 5px solid #666;
     box-sizing: border-box;
     background: #eee;
-    /*padding: 5px;*/
-    display: block;
+    /* padding: 5px; */
+    display: flex;
     float: left;
+    height: calc( (100vh - 310px) / 2);
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
 }
-
 
 .m-audit-item>li {
     padding: 5px 10px;
@@ -122,6 +127,13 @@
     justify-content: center;
     align-items: center;
     color: #333;
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
 }
 
 li.u-item-title {
@@ -129,4 +141,50 @@ li.u-item-title {
     color: #fff;
     text-align: center;
     position: relative;
+    font-size: 20px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.m-result {
+    background: #eee;
+    padding: 5px 15px;
+}
+
+.m-result .m-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+     border-bottom: 1px solid #aaa;
+}
+
+
+.m-result .m-row div {
+    font-family: "Microsoft Yahei";
+    font-size: 32px;
+    color: #333;
+    margin-right: 20px;
+    flex:none;
+}
+
+
+.m-row .u-gid {
+    color: #ff6600!important;
+}
+
+
+.m-row .u-score {
+    color: #ff0000!important;
+    display: flex;
+    flex:1!important;
+    justify-content: flex-end;
+    font-weight: 600;
+    font-size: 48px!important;
+}
+
+.m-row .u-member {
+    font-size: 24px!important;
+    color: #4B77BE!important;
 }

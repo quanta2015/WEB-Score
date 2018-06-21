@@ -11,6 +11,16 @@ function avgr(s) {
   return ret;
 }
 
+
+function initGroupInfo(data) {
+    let gd = JSON.parse(data)
+    $('.m-info .u-gid').text('G' + gd.id);
+    $('.m-info .u-title').text(gd.title);
+    $('.m-info .u-member').text(gd.member);
+    $('.u-git').text(gd.github);
+    $('.u-item-title').removeClass('del');
+}
+
 function init() {
     socket = io();
 
@@ -20,6 +30,11 @@ function init() {
         $('#start').prop('disabled',false);
     });
 
+    socket.on('displayInfo', function(data){
+        initGroupInfo(data)
+    });
+
+
     socket.on('login-succ', function(uid){
         // let code = strTo62(uid);
         let item = $.format(HTML_AUDIT,strTo62(uid),uid);
@@ -28,14 +43,10 @@ function init() {
     });
 
     socket.on('start', function(data){
-        let gd = JSON.parse(data)
-        $('.m-info .u-gid').text(gd.id);
-        $('.m-info .u-title').text(gd.title);
-        $('.m-info .u-member').text(gd.member);
-        // $('.u-git').text(gd.git);
+        
 
         $('.m-wait').hide();
-        $('.m-info').show();
+        // $('.m-info').show();
         $('.m-score').show();
         $('#start').prop('disabled',true);
         $('#mark').prop('disabled',false);
@@ -79,24 +90,25 @@ function init() {
             }
         }
         ret.splice(minId,1);
-        $('#result-f').text( avgr(ret));
 
+        finalResult =  avgr(ret)
+        $('#result-f').text(finalResult);
+        socket.emit('saveresult', finalResult);
+
+        console.log(ret);
+
+        //显示×
         $('#'+minUid).addClass('del');
         $('#'+maxUid).addClass('del');
 
-        console.log(ret);
+        //设置按钮状态
         $('#mark').prop('disabled',true);
         $('#next').prop('disabled',false);
     });
 
 
-    socket.on('next', function(data){
-        let gd = JSON.parse(data)
-        $('.m-info .u-gid').text(gd.id);
-        $('.m-info .u-title').text(gd.title);
-        $('.m-info .u-member').text(gd.member);
-        $('.u-item-title').removeClass('del');
-        // $('.u-git').text(gd.git);
+    socket.on('next', function(){
+        // initGroupInfo(data)
 
         $('#start').prop('disabled',false);
         $('#mark').prop('disabled',true);
@@ -105,6 +117,37 @@ function init() {
         $('.u-mark').text('0');
         $('#result-f').text('0');
     });
+
+    socket.on('end', function(data){
+        $('#end').prop('disabled',false);
+        $('#next').prop('disabled',true);
+    });
+
+    socket.on('grade', function(data){
+        var ret = JSON.parse(data);
+        $('.m-main').hide();
+        $('.m-audit').hide();
+
+
+        for(i=0;i<ret.length;i++) {
+            for(j=i+1;j<ret.length;j++) {
+                if ( parseInt(ret[i].grade)< parseInt(ret[j].grade) ) {
+                    tmp = ret[i];
+                    ret[i] = ret[j];
+                    ret[j] = tmp;
+                }
+            }
+        }
+
+        for(i=0;i<ret.length;i++) {
+            let item = $.format(HTML_RESULT,ret[i].id,ret[i].title,ret[i].member,ret[i].grade);
+            $('.m-result').append(item)
+        }
+
+        $('.m-result').show(100);
+        $('#end').prop('disabled',true);
+    });
+
 
 
 
@@ -116,6 +159,7 @@ function init() {
     $('#start').on('click', doStart);
     $('#mark').on('click', doMark);
     $('#next').on('click', doNext);
+    $('#end').on('click', doEnd);
 }
 
 
@@ -133,6 +177,10 @@ function doMark() {
 
 function doNext() {
     socket.emit('next');
+}
+
+function doEnd() {
+    socket.emit('end');
 }
 
 

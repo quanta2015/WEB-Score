@@ -78,3 +78,51 @@
     background: #999;
     color: #fff;
 }
+
+
+.g-end {
+   margin: 150px auto;
+   background: #eee;
+   width: 560px;
+   border-radius: 3px;
+   padding: 20px 15px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.u-end-title {
+  font-size: 64px;
+  text-align: center;
+  color: #E43A45;
+}
+
+
+.m-info {
+    position: absolute;
+    width: 200px;
+    background: #fff;
+    height: 120px;
+    left: -230px;
+    top: 0;
+    border-radius: 2px;
+    color: #666;
+    font-size: 12px;
+    padding: 10px;
+}
+
+
+.m-info div {
+    padding: 5px;
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.m-info .u-title {
+    color: #666;
+    font-weight: 600;
+    /* font-size: 25px; */
+}

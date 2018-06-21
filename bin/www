@@ -1,30 +1,65 @@
 #!/usr/bin/env node
 
 
-var data = [
-{id:'G1', title:'租房系统',member:'王慧|禤小兰|安亚慧|赵建新'},
-{id:'G2', title:'求职数据系统',member:'钱英敏|王吉峰|廖书雷|杨鹏程'},
-{id:'G3', title:'课程推荐系统',member:'徐嘉|程泽|赵华洋|牛子麒'},
-{id:'G4', title:'求职系统',member:'王剑|徐航迪|叶奥丰|徐建超'},
-{id:'G5', title:'房价数据系统',member:'雷涛|王杨|许宇星'},
-{id:'G6', title:'租房数据系统',member:'王孙乔|陈柏韬|徐博'},
-{id:'G7', title:'旅游数据系统',member:'曼尼亚|古丽皮也·斯皮尔|熊明月'},
-{id:'G8', title:'美食系统',member:'万清弋|王霖浩|陈东昊'} ]
+// var data = [
+// {id:'G1', mobile:'13588045359', title:'租房系统',member:'王慧|禤小兰|安亚慧|赵建新'},
+// {id:'G2', mobile:'13588043571', title:'求职数据系统',member:'钱英敏|王吉峰|廖书雷|杨鹏程'},
+// {id:'G3', mobile:'13588045165', title:'职业推荐系统',member:'徐嘉|程泽|赵华洋|牛子麒'},
+// {id:'G4', mobile:'15867168344', title:'求职系统',member:'王剑|徐航迪|叶奥丰|徐建超'},
+// {id:'G5', mobile:'15990184849', title:'房价数据系统',member:'雷涛|王杨|许宇星'},
+// {id:'G6', mobile:'18758594159', title:'租房数据系统',member:'王孙乔|陈柏韬|徐博'},
+// {id:'G7', mobile:'', title:'旅游数据系统',member:'曼尼亚|古丽皮也·斯皮尔|熊明月'},
+// {id:'G8', mobile:'13588085267', title:'美食系统',member:'万清弋|王霖浩|陈东昊'} ]
 
-var cur = 0;
+
+var data = [
+{"id":"1","member":"马海强、徐鑫雨、张　凡 ","title":"二手物品交易网站","github":"https://github.com/WebProject111/web","mobile":"15058613833","login":"0","grade":"82"},
+{"id":"2","member":"郑柳、陈铭璇、王胤凯 ","title":"书籍收藏推荐","github":"https://github.com/xiaxixi/Book-recommendation-collection","mobile":"15990184770","login":"0","grade":"92"},
+{"id":"3","member":"张鑫、祝夏云、组长 ","title":"形体管理","github":"https://github.com/zhangxin1102/zhangxin.github.com","mobile":"18969949128","login":"0","grade":"90"},
+{"id":"4","member":"杨德杰、干臻原、李伊宁 ","title":"代码技术问题社区","mobile":"15990184787","login":"0","grade":"90"},
+{"id":"6","member":"万峰、朱勋韬、谢强 ","title":"聊天室","github":"https://github.com/XQ0118/project-desktop.git","mobile":"17376507894","login":"0","grade":"90"},
+{"id":"7","member":"王绎朝、梅思远 ","title":"Duel - 手势游戏","github":"https://github.com/Darkmota/Duel","mobile":"15990184717","login":"0","grade":"83"},
+{"id":"9","member":"陈豪 ","title":" 微信小程序","github":"https://github.com/15305813298/-","mobile":"15305813298","login":"0","grade":"88"},
+{"id":"14","member":"李帆顺、周渊博 ","title":" mk编辑器","github":"https://github.com/oddisland/Draft","mobile":"15990184849","login":"0","grade":"96"},
+{"id":"5","member":"任亚伟、彭艳 ","title":"Resume Making","github":"https://github.com/natsuRen/web","mobile":"15355468038","login":"0","grade":"0"},
+{"id":"8","member":"罗淳、付朝燕 ","title":"亦书亦音","github":"https://github.com/slcyyy/ysyy","mobile":"15990184855","login":"0","grade":"0"},
+{"id":"10","member":"叶艳洁、蔡雅洁、章薇、陶娣 ","title":" 微信小程序-零拾实验室","github":"https://github.com/PTaoer/WebProgramming","mobile":"15990184827","login":"0","grade":"0"},
+{"id":"11","member":"周威炜、顾晨俊、钱根、张承成 ","title":"论坛","mobile":"18989845722","login":"0","grade":"0"},
+{"id":"12","member":"陈其快、吴震、王鑫、程广友 ","title":"音乐播放器","github":"https://github.com/klaaay/My-Silly-Music-Player","mobile":"15990184811","login":"0","grade":"0"},
+{"id":"13","member":"吴佳琪、陈贵婷、王秸 ","title":"照片编辑器","github":"https://github.com/Fionakiki/Myproject","mobile":"15355467622","login":"0","grade":"0"},
+{"id":"15","member":"陈俊卿、齐聪聪 ","title":" 淘宝","github":"https://github.com/xylkh/web_project  ","mobile":"18989849378","login":"0","grade":"0"},
+{"id":"16","member":"李博乐、孔昊东 ","title":" 影视推荐","github":"https://github.com/eliotkong/web_movie_hznu","mobile":"15990184818","login":"0","grade":"0"}
+]
+
+
+
+var STATUS_INIT  = 0;
+var STATUS_LOGIN = 1;
+var STATUS_AUDIT = 2;
+var STATUS_END   = 3;
+
+var cur;
+var status = STATUS_INIT;
 var userList  = [];
 var retList = [];
 
 var app = require('../app');
 // var debug = require('debug')('score:server');
 var http = require('http');
+var fs = require('fs');
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3600');
 app.set('port', port);
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 
-
+function initdata() {
+  cur = 8;
+  for(i=0;i<data.length;i++) {
+    data[i].login = 0;
+    // data[i].grade = 0;
+  }
+}
 
 function avgr(s) {
   let ret = 0;
@@ -38,11 +73,24 @@ function avgr(s) {
 function exist(arr,uid) {
 
   for(i=0;i<arr.length;i++) {
-    if (arr[i] === uid) {
+    if (arr[i].usr === uid) {
       return true;
     }
   }
   return false;
+}
+
+
+function checkPwd(pwd) {
+  let ret = false;
+  for(i = 0;i<data.length;i++) {
+    if ((pwd === data[i].mobile)&&( parseInt(data[i].login) === 0)) {
+      data[i].login = 1;
+      ret = true;
+      break;
+    }
+  }
+  return ret;
 }
 
 io.on('connection', function(socket){
@@ -54,19 +102,30 @@ io.on('connection', function(socket){
   });
 
   socket.on('init', function(){
-    io.emit('init');
+    status = STATUS_LOGIN;
+    initdata();
+
+    io.emit('init' );
+    io.emit('displayInfo', JSON.stringify(data[cur]))
   });
 
   socket.on('login', function(msg){
     console.log('message: ' + msg);
     let obj = JSON.parse(msg)
 
-    if (obj.pwd === 'a') {
+    // if (status !== STATUS_LOGIN) {
+    //   console.log('system can not login in now...');
+    //   io.emit('login-err', obj.usr, '现在不是登录状态！');
+    //   return;
+    // }
+    
+
+    if ( checkPwd(obj.usr) ) {
       io.emit('login-succ',obj.usr);
       userList.push(obj.usr);
       log(userList);
     }else{
-      io.emit('login-err');
+      io.emit('login-err',obj.usr, '登录密码错误');
     }
   });
 
@@ -74,6 +133,7 @@ io.on('connection', function(socket){
     userList = [];
     retList = [];
     io.emit('start', JSON.stringify(data[cur]) );
+    status = STATUS_AUDIT;
     log('start game...');
   });
 
@@ -92,22 +152,55 @@ io.on('connection', function(socket){
     log('calu result...');
   });
 
+
+  socket.on('saveresult', function(ret){
+    data[cur].grade = ret;
+
+    cnt = '';
+    for(i=0;i<data.length;i++) {
+      gid = data[i].id;
+      title = data[i].title;
+      member = data[i].member;
+      grade = data[i].grade;
+      cnt += gid + "\t " + title + "\t " + member + "\t " + grade + "\r\n";
+    }
+    fs.writeFileSync('result.csv', cnt, {flag:'w'})
+  });
+
   socket.on('next', function(){
     cur++;
     retList = [];
 
-    io.emit('next', JSON.stringify(data[cur]));
+    if (cur>= data.length) {
+      io.emit('end');
+      return;
+    }
+
+    io.emit('next');
+    io.emit('displayInfo', JSON.stringify(data[cur]))
+
     log('init next group...');
+  });
+
+  socket.on('end', function(){
+      io.emit('grade', JSON.stringify(data));
   });
 
 
   socket.on('close', function(uid){
     io.emit('close',uid);
     userList.splice(userList.indexOf(uid),1);
+
+
+    for(i=0;i<data.length;i++) {
+      if (data[i].mobile === uid) {
+        data[i].login =0;
+        break;
+      }
+    }
     log(userList);
   });
 });
-
 
 
 

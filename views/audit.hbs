@@ -1,12 +1,19 @@
 <div class="g-login"  >
   <div class="m-row">
-    <div class="m-col"><input type="text" id="usr" placeholder="用户名"></div>
-    <div class="m-col"><input type="password" id="pwd"  placeholder="密码"></div>
+    <div class="m-col"><input type="text" id="usr" placeholder="登录号码"></div>
+    <!-- <div class="m-col"><input type="password" id="pwd"  placeholder="密码"></div> -->
     <button class="btn-login" type="submit">登录</button>
   </div>
 </div>
 
-<div class="g-audit" style="display: none">
+<div class="g-audit"  style="display: none">
+  <div class="m-info">
+    
+    <div class="u-gid" ></div>
+    <div class="u-title" ></div>
+    <div class="u-member" ></div>
+    <div class="u-git" ><a href="#" target="_blank"></a></div>
+  </div>
   <div class="m-id"></div>
   <div class="m-counter">120</div>
   <div class="m-row">
@@ -58,11 +65,13 @@
     <div class="m-col"><button class="btn-mark dis" type="submit" disabled>评分</button></div>
     
   </div>
+</div>
 
-
-
-
-  
+<div class="g-end" style="display: none" >
+  <div class="m-row">
+    <p class="u-end-title">评分结束!</p>
+    <p class="u-end-title">谢谢！</p>
+  </div>
 </div>
 
 <link rel='stylesheet' href='/lib/alertify/alertify.css' />

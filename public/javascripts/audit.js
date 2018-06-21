@@ -1,4 +1,4 @@
-var WAIT_TIME = 30;
+var WAIT_TIME = 120;
 var socket;
 var _usr;
 var _count = WAIT_TIME;
@@ -17,6 +17,15 @@ function doCounter() {
   }, 1000 );
 }
 
+
+function initGroupInfo(data) {
+    let gd = JSON.parse(data)
+    $('.m-info .u-gid').text('G' + gd.id);
+    $('.m-info .u-title').text(gd.title);
+    $('.m-info .u-member').text(gd.member);
+    $('.u-git a').text(gd.github).attr('href', gd.github)
+}
+
 $(init)
 
 function init() {
@@ -27,13 +36,18 @@ function init() {
       $('.g-login').hide();
       $('.g-audit').fadeIn(100);
 
-
       $('.m-id').text(strTo62(usr));
     }
   });
 
-  socket.on('login-err', function(msg){
-    err('密码错误！')
+  socket.on('displayInfo', function(data){
+        initGroupInfo(data)
+    });
+
+  socket.on('login-err', function(usr, msg){
+    if(usr === _usr) {
+      err(msg)
+    }
   });
 
   socket.on('start', function(msg){
@@ -46,6 +60,11 @@ function init() {
   socket.on('next', function(data){
     $('.u-mark').removeClass('sel');
     $('.m-counter').text(_count=WAIT_TIME);
+  });
+
+  socket.on('end', function(data){
+    $('.g-audit').hide();
+    $('.g-end').show();
   });
 
   window.onbeforeunload = function(){  
@@ -88,8 +107,7 @@ function doSelect() {
 function doLogin() {
   _usr = $('#usr').val();
   let obj = {
-    usr: $('#usr').val(),
-    pwd: $('#pwd').val(),
+    usr: $('#usr').val()
   };
   log(obj);
   socket.emit('login', JSON.stringify(obj));

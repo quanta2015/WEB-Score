@@ -34,7 +34,7 @@ var hbs = exphbs.create({
 app.engine('hbs', hbs.engine);
 
 app.use('/', indexRouter);
-app.use('/admin', adminRouter);
+app.use('/admin2018', adminRouter);
 app.use('/audit', auditRouter);
 
 // catch 404 and forward to error handler
